@@ -1,6 +1,11 @@
-const express = require("express");
+const express = require('express');
 const app = express();
-const port = 3000; 
+const dotenv = require('dotenv').config();
+const port = process.env.PORT;
+
+const User = require('./src/models/db/userModel');
+
+const userRouter = require('./src/routes/userRouter')(User);
 
 app.listen(port, err => {
     if (err) {
@@ -10,3 +15,5 @@ app.listen(port, err => {
 
     console.log('Server running in port: ' + port);
 })
+
+app.use('/api', userRouter);
